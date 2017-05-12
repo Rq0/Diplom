@@ -26,7 +26,8 @@ namespace Coursach.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var menuComposition = db.MenuComposition.Include(m => m.DishComposition1).Where(m=>m.Id == id);
+            
+            var menuComposition = db.MenuComposition.Include(m => m.DishComposition1).Where(m => m.Menu == id);
             return View(menuComposition.ToList());
         }
 
