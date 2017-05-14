@@ -1,14 +1,13 @@
 ﻿@model IEnumerable<Coursach.MenuComposition>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Generate";
 }
 
-<h2>Index</h2>
+<h2>Generate</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
-    @Html.ActionLink("Сгенерировать меню", "Generate")
 </p>
 <table class="table">
     <tr>
@@ -27,7 +26,7 @@
             @Html.DisplayFor(modelItem => item.Menu)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DishComposition1.Dish1.Name)
+            @Html.DisplayFor(modelItem => item.DishComposition1.Id)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

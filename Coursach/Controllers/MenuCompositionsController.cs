@@ -4,8 +4,11 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
+using System.Web.UI.WebControls;
 using Coursach;
 
 namespace Coursach.Controllers
@@ -14,19 +17,46 @@ namespace Coursach.Controllers
     {
         private MenuUnitEntities db = new MenuUnitEntities();
 
+        
+        public ActionResult Generate([Bind(Include = "Id,Menu,DishComposition")] MenuComposition menuC)
+        {
+            foreach (DishTypes dishType in db.DishTypes)
+            {
+                Dish dish;
+
+                MenuComposition menuComposition = new MenuComposition
+                {
+                    Id = 20,
+                    Menu = menuC.Id,
+                    DishComposition = db.Dish.OrderBy(m=>m.Frequency).First(n=>n.Type==dishType.Id).DishComposition.First().Id
+                };
+                if (ModelState.IsValid)
+                {
+                    db.MenuComposition.Add(menuComposition);
+                    dish = db.Dish.Find(menuComposition.DishComposition1.Dish1.Id);
+                    dish.Frequency++;
+                    db.Entry(dish).State = EntityState.Modified;
+                }
+            }
+            db.SaveChanges();
+
+            return RedirectToAction("ShowWhere", "MenuCompositions", routeValues: new { id =menuC.Id});
+        }
+
         // GET: MenuCompositions
         public ActionResult Index()
         {
             var menuComposition = db.MenuComposition.Include(m => m.DishComposition1);
             return View(menuComposition.ToList());
         }
+
         public ActionResult ShowWhere(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
             var menuComposition = db.MenuComposition.Include(m => m.DishComposition1).Where(m => m.Menu == id);
             return View(menuComposition.ToList());
         }
@@ -133,7 +163,7 @@ namespace Coursach.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
+            { 
                 db.Dispose();
             }
             base.Dispose(disposing);
