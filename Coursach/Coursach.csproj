@@ -205,6 +205,7 @@
     <Compile Include="Controllers\IngridientsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuCompositionsController.cs" />
+    <Compile Include="Controllers\MenuRequirementsController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
     <Compile Include="Dish.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
@@ -240,6 +241,9 @@
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MenuComposition.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MenuRequirement.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
@@ -356,6 +360,11 @@
     <Content Include="Views\Menus\Index.cshtml" />
     <Content Include="Views\MenuCompositions\ShowWhere.cshtml" />
     <Content Include="Views\MenuCompositions\Generate.cshtml" />
+    <Content Include="Views\MenuRequirements\Create.cshtml" />
+    <Content Include="Views\MenuRequirements\Delete.cshtml" />
+    <Content Include="Views\MenuRequirements\Details.cshtml" />
+    <Content Include="Views\MenuRequirements\Edit.cshtml" />
+    <Content Include="Views\MenuRequirements\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

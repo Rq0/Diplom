@@ -10,132 +10,117 @@ using Coursach;
 
 namespace Coursach.Controllers
 {
-    public class DishesController : Controller
+    public class MenuRequirementsController : Controller
     {
         private MenuUnitEntities db = new MenuUnitEntities();
-        public ActionResult Calculate([Bind(Include = "Id,Name,Cost,Type,Frequency")] Dish dish)
-        {
-            List<DishComposition> dishCompositions = db.DishComposition.Where(m => m.Dish == dish.Id).ToList();
-            dish = db.Dish.Find(dish.Id);
-            dish.Cost = "0";
-            for (int i = 0; i< dishCompositions.Count;i++)
-            {
-                var ingridient = db.Ingridient.Find(dishCompositions[i].Ingridient);
-                if (ingridient != null)
-                    dish.Cost = (int.Parse(dish.Cost) + int.Parse(ingridient.Cost)).ToString();
-            }
-            if (ModelState.IsValid)
-            {
-                db.Entry(dish).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            ViewBag.Type = new SelectList(db.DishTypes, "Id", "Name", dish.Type);
-            return RedirectToAction("Index");
-        }
-        // GET: Dishes
+        // GET: MenuRequirements
         public ActionResult Index()
         {
-            var dish = db.Dish.Include(d => d.DishTypes);
-            return View(dish.ToList());
+            var menuRequirement = db.MenuRequirement.Include(m => m.DishTypes).Include(m => m.Menu1);
+            return View(menuRequirement.ToList());
         }
 
-        // GET: Dishes/Details/5
+        // GET: MenuRequirements/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Dish dish = db.Dish.Find(id);
-            if (dish == null)
+            MenuRequirement menuRequirement = db.MenuRequirement.Find(id);
+            if (menuRequirement == null)
             {
                 return HttpNotFound();
             }
-            return View(dish);
+            return View(menuRequirement);
         }
 
-        // GET: Dishes/Create
+        // GET: MenuRequirements/Create
         public ActionResult Create()
         {
-            ViewBag.Type = new SelectList(db.DishTypes, "Id", "Name");
+            ViewBag.DishType = new SelectList(db.DishTypes, "Id", "Name");
+            ViewBag.Menu = new SelectList(db.Menu, "Id", "Id");
             return View();
         }
 
-        // POST: Dishes/Create
+        // POST: MenuRequirements/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Cost,Type,Frequency")] Dish dish)
+        public ActionResult Create([Bind(Include = "id,Menu,DishType,Count")] MenuRequirement menuRequirement)
         {
+            menuRequirement.Menu = menuRequirement.id;
             if (ModelState.IsValid)
             {
-                db.Dish.Add(dish);
+                db.MenuRequirement.Add(menuRequirement);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            ViewBag.Type = new SelectList(db.DishTypes, "Id", "Name", dish.Type);
-            return View(dish);
+            ViewBag.DishType = new SelectList(db.DishTypes, "Id", "Name", menuRequirement.DishType);
+            ViewBag.Menu = new SelectList(db.Menu, "Id", "Id", menuRequirement.Menu);
+            return View(menuRequirement);
         }
 
-        // GET: Dishes/Edit/5
+        // GET: MenuRequirements/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Dish dish = db.Dish.Find(id);
-            if (dish == null)
+            MenuRequirement menuRequirement = db.MenuRequirement.Find(id);
+            if (menuRequirement == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Type = new SelectList(db.DishTypes, "Id", "Name", dish.Type);
-            return View(dish);
+            ViewBag.DishType = new SelectList(db.DishTypes, "Id", "Name", menuRequirement.DishType);
+            ViewBag.Menu = new SelectList(db.Menu, "Id", "Id", menuRequirement.Menu);
+            return View(menuRequirement);
         }
 
-        // POST: Dishes/Edit/5
+        // POST: MenuRequirements/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Cost,Type,Frequency")] Dish dish)
+        public ActionResult Edit([Bind(Include = "id,Menu,DishType,Count")] MenuRequirement menuRequirement)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(dish).State = EntityState.Modified;
+                db.Entry(menuRequirement).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Type = new SelectList(db.DishTypes, "Id", "Name", dish.Type);
-            return View(dish);
+            ViewBag.DishType = new SelectList(db.DishTypes, "Id", "Name", menuRequirement.DishType);
+            ViewBag.Menu = new SelectList(db.Menu, "Id", "Id", menuRequirement.Menu);
+            return View(menuRequirement);
         }
 
-        // GET: Dishes/Delete/5
+        // GET: MenuRequirements/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Dish dish = db.Dish.Find(id);
-            if (dish == null)
+            MenuRequirement menuRequirement = db.MenuRequirement.Find(id);
+            if (menuRequirement == null)
             {
                 return HttpNotFound();
             }
-            return View(dish);
+            return View(menuRequirement);
         }
 
-        // POST: Dishes/Delete/5
+        // POST: MenuRequirements/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Dish dish = db.Dish.Find(id);
-            db.Dish.Remove(dish);
+            MenuRequirement menuRequirement = db.MenuRequirement.Find(id);
+            db.MenuRequirement.Remove(menuRequirement);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

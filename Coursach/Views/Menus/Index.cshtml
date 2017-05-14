@@ -2,21 +2,23 @@
 @model IEnumerable<Coursach.Menu>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Меню";
 }
 
-<h2>Index</h2>
+<h2>Меню</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создать меню", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Id)
+            Номер меню
+            @*@Html.DisplayNameFor(model => model.Id)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            Дата
+            @*@Html.DisplayNameFor(model => model.Date)*@
         </th>
         <th></th>
     </tr>
@@ -30,10 +32,11 @@
             @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
-            @Html.ActionLink("Сгенерировать меню", "Generate", "MenuCompositions", routeValues: new { id = item.Id }, htmlAttributes: new { id = "generateLink" })
-            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+            @Html.ActionLink("Заполнить требования", "Create", "MenuRequirements", routeValues: new { id = item.Id }, htmlAttributes: new { id = "requirementsLink" }) |
+            @Html.ActionLink("Сгенерировать меню", "Generate", "MenuCompositions", routeValues: new {id = item.Id }, htmlAttributes: new {id = "generateLink"}) |
+            @Html.ActionLink("Изменить", "Edit", new {id = item.Id}) |
+            @Html.ActionLink("Подробности", "Details", new {id = item.Id}) |
+            @Html.ActionLink("Удалить", "Delete", new {id = item.Id})
         </td>
     </tr>
 }

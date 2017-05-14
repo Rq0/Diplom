@@ -31,5 +31,6 @@ namespace Coursach
         public virtual DbSet<Ingridient> Ingridient { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<MenuComposition> MenuComposition { get; set; }
+        public virtual DbSet<MenuRequirement> MenuRequirement { get; set; }
     }
 }

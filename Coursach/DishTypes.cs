@@ -18,6 +18,7 @@ namespace Coursach
         public DishTypes()
         {
             this.Dish = new HashSet<Dish>();
+            this.MenuRequirement = new HashSet<MenuRequirement>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,7 @@ namespace Coursach
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dish> Dish { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MenuRequirement> MenuRequirement { get; set; }
     }
 }

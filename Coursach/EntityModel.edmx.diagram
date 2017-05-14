@@ -16,6 +16,9 @@
         <EntityTypeShape EntityType="MenuUnitDefaultModel.MenuComposition" Width="1.5" PointX="7.5" PointY="4.25" />
         <AssociationConnector Association="MenuUnitDefaultModel.FK_MenuComposition_DishComposition" />
         <AssociationConnector Association="MenuUnitDefaultModel.FK_Menu_MenuComposition" />
+        <EntityTypeShape EntityType="MenuUnitDefaultModel.MenuRequirement" Width="1.5" PointX="10.375" PointY="3.875" />
+        <AssociationConnector Association="MenuUnitDefaultModel.FK_MenuRequirement_DishTypes" />
+        <AssociationConnector Association="MenuUnitDefaultModel.FK_MenuRequirement_Menu" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

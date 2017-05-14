@@ -12,20 +12,14 @@ namespace Coursach
     using System;
     using System.Collections.Generic;
     
-    public partial class Menu
+    public partial class MenuRequirement
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Menu()
-        {
-            this.MenuRequirement = new HashSet<MenuRequirement>();
-        }
+        public int id { get; set; }
+        public Nullable<int> Menu { get; set; }
+        public Nullable<int> DishType { get; set; }
+        public Nullable<int> Count { get; set; }
     
-        public int Id { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<int> CompositionId { get; set; }
-    
-        public virtual MenuComposition MenuComposition { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MenuRequirement> MenuRequirement { get; set; }
+        public virtual DishTypes DishTypes { get; set; }
+        public virtual Menu Menu1 { get; set; }
     }
 }

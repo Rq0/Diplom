@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Coursach.MenuRequirement>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Требования к меню</h2>
+
+<p>
+    @Html.ActionLink("Добавить", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            № меню
+        </th>
+        <th>
+            Тип блюд
+        </th>
+        <th>
+            Количество блюд этого типа
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Menu1.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DishTypes.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Count)
+        </td>
+        <td>
+            @Html.ActionLink("Изменить", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Подробности", "Details", new { id=item.id }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

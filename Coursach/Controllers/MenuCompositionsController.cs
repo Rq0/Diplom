@@ -22,20 +22,34 @@ namespace Coursach.Controllers
         {
             foreach (DishTypes dishType in db.DishTypes)
             {
-                Dish dish;
+                try
+                {
+                    for (int i = 0;
+                        i < db.MenuRequirement.First(m => (m.Menu == menuC.Id && m.DishType == dishType.Id)).Count;
+                        i++)
+                    {
+                        Dish dish;
 
-                MenuComposition menuComposition = new MenuComposition
+                        MenuComposition menuComposition = new MenuComposition
+                        {
+                            Id = 20,
+                            Menu = menuC.Id,
+                            DishComposition = db.Dish.OrderBy(m => m.Frequency).First(n => n.Type == dishType.Id)
+                                .DishComposition.First().Id
+                        };
+                        if (ModelState.IsValid)
+                        {
+                            db.MenuComposition.Add(menuComposition);
+                            dish = db.Dish.Find(menuComposition.DishComposition1.Dish1.Id);
+                            dish.Frequency++;
+                            db.Entry(dish).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                catch (Exception e)
                 {
-                    Id = 20,
-                    Menu = menuC.Id,
-                    DishComposition = db.Dish.OrderBy(m=>m.Frequency).First(n=>n.Type==dishType.Id).DishComposition.First().Id
-                };
-                if (ModelState.IsValid)
-                {
-                    db.MenuComposition.Add(menuComposition);
-                    dish = db.Dish.Find(menuComposition.DishComposition1.Dish1.Id);
-                    dish.Frequency++;
-                    db.Entry(dish).State = EntityState.Modified;
+                    string err = e.Message;
                 }
             }
             db.SaveChanges();
