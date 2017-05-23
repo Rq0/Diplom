@@ -4,14 +4,14 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Подробности</h2>
 
 <div>
-    <h4>DishComposition</h4>
+    <h4>Состав блюд</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Dish1.Name)
+            Блюдо
         </dt>
 
         <dd>
@@ -19,16 +19,16 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Ingridient1.Name)
+            Ингредиент
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ingridient1.Name)
+            @Html.DisplayFor(model => model.Ingredient.Name)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Назад", "Index")
 </p>
