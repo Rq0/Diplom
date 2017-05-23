@@ -28,9 +28,11 @@ namespace Coursach
         public virtual DbSet<Dish> Dish { get; set; }
         public virtual DbSet<DishComposition> DishComposition { get; set; }
         public virtual DbSet<DishTypes> DishTypes { get; set; }
-        public virtual DbSet<Ingridient> Ingridient { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<MenuComposition> MenuComposition { get; set; }
         public virtual DbSet<MenuRequirement> MenuRequirement { get; set; }
+        public virtual DbSet<Entrance> Entrance { get; set; }
+        public virtual DbSet<EntranceComposition> EntranceComposition { get; set; }
+        public virtual DbSet<Ingredient> Ingredient { get; set; }
     }
 }

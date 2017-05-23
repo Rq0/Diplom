@@ -23,10 +23,11 @@ namespace Coursach
         public int Id { get; set; }
         public Nullable<int> Dish { get; set; }
         public Nullable<int> Ingridient { get; set; }
+        public Nullable<double> Count { get; set; }
     
         public virtual Dish Dish1 { get; set; }
-        public virtual Ingridient Ingridient1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MenuComposition> MenuComposition { get; set; }
+        public virtual Ingredient Ingredient { get; set; }
     }
 }

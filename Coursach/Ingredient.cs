@@ -12,22 +12,23 @@ namespace Coursach
     using System;
     using System.Collections.Generic;
     
-    public partial class Dish
+    public partial class Ingredient
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Dish()
+        public Ingredient()
         {
             this.DishComposition = new HashSet<DishComposition>();
+            this.EntranceComposition = new HashSet<EntranceComposition>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<decimal> Cost { get; set; }
-        public Nullable<int> Type { get; set; }
-        public Nullable<int> Frequency { get; set; }
+        public Nullable<double> Count { get; set; }
     
-        public virtual DishTypes DishTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DishComposition> DishComposition { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EntranceComposition> EntranceComposition { get; set; }
     }
 }

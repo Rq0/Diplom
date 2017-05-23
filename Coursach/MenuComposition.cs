@@ -14,18 +14,11 @@ namespace Coursach
     
     public partial class MenuComposition
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MenuComposition()
-        {
-            this.Menu1 = new HashSet<Menu>();
-        }
-    
         public int Id { get; set; }
         public Nullable<int> Menu { get; set; }
         public Nullable<int> DishComposition { get; set; }
     
         public virtual DishComposition DishComposition1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Menu> Menu1 { get; set; }
+        public virtual Menu Menu2 { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Coursach.Controllers
         // GET: DishCompositions
         public ActionResult Index()
         {
-            var dishComposition = db.DishComposition.Include(d => d.Dish1).Include(d => d.Ingridient1);
+            var dishComposition = db.DishComposition.Include(d => d.Dish1).Include(d => d.Ingredient);
             return View(dishComposition.ToList());
         }
 
@@ -40,7 +40,7 @@ namespace Coursach.Controllers
         public ActionResult Create()
         {
             ViewBag.Dish = new SelectList(db.Dish, "Id", "Name");
-            ViewBag.Ingridient = new SelectList(db.Ingridient, "Id", "Name");
+            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace Coursach.Controllers
             }
 
             ViewBag.Dish = new SelectList(db.Dish, "Id", "Name", dishComposition.Dish);
-            ViewBag.Ingridient = new SelectList(db.Ingridient, "Id", "Name", dishComposition.Ingridient);
+            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name", dishComposition.Ingridient);
             return View(dishComposition);
         }
 
@@ -76,7 +76,7 @@ namespace Coursach.Controllers
                 return HttpNotFound();
             }
             ViewBag.Dish = new SelectList(db.Dish, "Id", "Name", dishComposition.Dish);
-            ViewBag.Ingridient = new SelectList(db.Ingridient, "Id", "Name", dishComposition.Ingridient);
+            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name", dishComposition.Ingridient);
             return View(dishComposition);
         }
 
@@ -94,7 +94,7 @@ namespace Coursach.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.Dish = new SelectList(db.Dish, "Id", "Name", dishComposition.Dish);
-            ViewBag.Ingridient = new SelectList(db.Ingridient, "Id", "Name", dishComposition.Ingridient);
+            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name", dishComposition.Ingridient);
             return View(dishComposition);
         }
 

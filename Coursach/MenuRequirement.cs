@@ -14,7 +14,7 @@ namespace Coursach
     
     public partial class MenuRequirement
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public Nullable<int> Menu { get; set; }
         public Nullable<int> DishType { get; set; }
         public Nullable<int> Count { get; set; }

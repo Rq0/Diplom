@@ -17,15 +17,16 @@ namespace Coursach
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Menu()
         {
-            this.MenuRequirement = new HashSet<MenuRequirement>();
+            this.MenuRequirement1 = new HashSet<MenuRequirement>();
+            this.MenuComposition1 = new HashSet<MenuComposition>();
         }
     
         public int Id { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<int> CompositionId { get; set; }
     
-        public virtual MenuComposition MenuComposition { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MenuRequirement> MenuRequirement { get; set; }
+        public virtual ICollection<MenuRequirement> MenuRequirement1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MenuComposition> MenuComposition1 { get; set; }
     }
 }

@@ -7,18 +7,22 @@
       <Diagram DiagramId="e3f07df26114453f95b1f3c9f0812586" Name="Diagram1">
         <EntityTypeShape EntityType="MenuUnitDefaultModel.Dish" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="MenuUnitDefaultModel.DishComposition" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="MenuUnitDefaultModel.DishTypes" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MenuUnitDefaultModel.Ingridient" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="MenuUnitDefaultModel.Menu" Width="1.5" PointX="9.125" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MenuUnitDefaultModel.DishTypes" Width="1.75" PointX="0.625" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MenuUnitDefaultModel.Menu" Width="2.5" PointX="8.75" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="MenuUnitDefaultModel.FK_Dish_DishTypes" ManuallyRouted="false" />
         <AssociationConnector Association="MenuUnitDefaultModel.FK_DishComposition_Dish" ManuallyRouted="false" />
-        <AssociationConnector Association="MenuUnitDefaultModel.FK_DishComposition_Ingridient" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="MenuUnitDefaultModel.MenuComposition" Width="1.5" PointX="7.5" PointY="4.25" />
+        <EntityTypeShape EntityType="MenuUnitDefaultModel.MenuComposition" Width="1.5" PointX="7.25" PointY="4.5" />
         <AssociationConnector Association="MenuUnitDefaultModel.FK_MenuComposition_DishComposition" />
-        <AssociationConnector Association="MenuUnitDefaultModel.FK_Menu_MenuComposition" />
-        <EntityTypeShape EntityType="MenuUnitDefaultModel.MenuRequirement" Width="1.5" PointX="10.375" PointY="3.875" />
+        <EntityTypeShape EntityType="MenuUnitDefaultModel.MenuRequirement" Width="1.5" PointX="10.5" PointY="4.125" IsExpanded="true" />
         <AssociationConnector Association="MenuUnitDefaultModel.FK_MenuRequirement_DishTypes" />
         <AssociationConnector Association="MenuUnitDefaultModel.FK_MenuRequirement_Menu" />
+        <AssociationConnector Association="MenuUnitDefaultModel.FK_MenuComposition_Menu" />
+        <EntityTypeShape EntityType="MenuUnitDefaultModel.Entrance" Width="1.5" PointX="0.75" PointY="4.625" />
+        <EntityTypeShape EntityType="MenuUnitDefaultModel.EntranceComposition" Width="1.5" PointX="2.75" PointY="4.5" />
+        <EntityTypeShape EntityType="MenuUnitDefaultModel.Ingredient" Width="1.5" PointX="4.875" PointY="4.5" />
+        <AssociationConnector Association="MenuUnitDefaultModel.FK_DishComposition_Ingredient" />
+        <AssociationConnector Association="MenuUnitDefaultModel.FK_EntranceComposition_Entrance" />
+        <AssociationConnector Association="MenuUnitDefaultModel.FK_EntranceComposition_Ingredient" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

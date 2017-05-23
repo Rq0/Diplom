@@ -17,7 +17,7 @@ namespace Coursach.Controllers
         // GET: Ingridients
         public ActionResult Index()
         {
-            return View(db.Ingridient.ToList());
+            return View(db.Ingredient.ToList());
         }
 
         // GET: Ingridients/Details/5
@@ -27,7 +27,7 @@ namespace Coursach.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ingridient ingridient = db.Ingridient.Find(id);
+            Ingredient ingridient = db.Ingredient.Find(id);
             if (ingridient == null)
             {
                 return HttpNotFound();
@@ -46,11 +46,11 @@ namespace Coursach.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Cost")] Ingridient ingridient)
+        public ActionResult Create([Bind(Include = "Id,Name,Cost")] Ingredient ingridient)
         {
             if (ModelState.IsValid)
             {
-                db.Ingridient.Add(ingridient);
+                db.Ingredient.Add(ingridient);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace Coursach.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ingridient ingridient = db.Ingridient.Find(id);
+            Ingredient ingridient = db.Ingredient.Find(id);
             if (ingridient == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace Coursach.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Cost")] Ingridient ingridient)
+        public ActionResult Edit([Bind(Include = "Id,Name,Cost")] Ingredient ingridient)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace Coursach.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ingridient ingridient = db.Ingridient.Find(id);
+            Ingredient ingridient = db.Ingredient.Find(id);
             if (ingridient == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace Coursach.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Ingridient ingridient = db.Ingridient.Find(id);
-            db.Ingridient.Remove(ingridient);
+            Ingredient ingridient = db.Ingredient.Find(id);
+            db.Ingredient.Remove(ingridient);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

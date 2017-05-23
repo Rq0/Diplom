@@ -9,42 +9,60 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Cost" Type="nvarchar" MaxLength="50" />
           <Property Name="Type" Type="int" />
+          <Property Name="Cost" Type="money" />
           <Property Name="Frequency" Type="int" />
         </EntityType>
         <EntityType Name="DishComposition">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Dish" Type="int" />
           <Property Name="Ingridient" Type="int" />
+          <Property Name="Count" Type="float" />
         </EntityType>
         <EntityType Name="DishTypes">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="Ingridient">
+        <EntityType Name="Entrance">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EntranceComposition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Entrance" Type="int" />
+          <Property Name="Ingredient" Type="int" />
+          <Property Name="Count" Type="float" />
+          <Property Name="Cost" Type="money" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Cost" Type="nvarchar" MaxLength="50" />
+          <Property Name="Cost" Type="money" />
+          <Property Name="Count" Type="float" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="date" />
-          <Property Name="CompositionId" Type="int" />
         </EntityType>
         <EntityType Name="MenuComposition">
           <Key>
@@ -56,9 +74,9 @@
         </EntityType>
         <EntityType Name="MenuRequirement">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Menu" Type="int" />
           <Property Name="DishType" Type="int" />
           <Property Name="Count" Type="int" />
@@ -87,11 +105,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DishComposition_Ingridient">
-          <End Role="Ingridient" Type="Self.Ingridient" Multiplicity="0..1" />
+        <Association Name="FK_DishComposition_Ingredient">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="0..1" />
           <End Role="DishComposition" Type="Self.DishComposition" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Ingridient">
+            <Principal Role="Ingredient">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="DishComposition">
@@ -99,15 +117,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Menu_MenuComposition">
-          <End Role="MenuComposition" Type="Self.MenuComposition" Multiplicity="0..1" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+        <Association Name="FK_EntranceComposition_Entrance">
+          <End Role="Entrance" Type="Self.Entrance" Multiplicity="0..1" />
+          <End Role="EntranceComposition" Type="Self.EntranceComposition" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MenuComposition">
+            <Principal Role="Entrance">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Menu">
-              <PropertyRef Name="CompositionId" />
+            <Dependent Role="EntranceComposition">
+              <PropertyRef Name="Entrance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntranceComposition_Ingredient">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="0..1" />
+          <End Role="EntranceComposition" Type="Self.EntranceComposition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EntranceComposition">
+              <PropertyRef Name="Ingredient" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -120,6 +150,18 @@
             </Principal>
             <Dependent Role="MenuComposition">
               <PropertyRef Name="DishComposition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuComposition_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+          <End Role="MenuComposition" Type="Self.MenuComposition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuComposition">
+              <PropertyRef Name="Menu" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -151,7 +193,9 @@
           <EntitySet Name="Dish" EntityType="Self.Dish" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DishComposition" EntityType="Self.DishComposition" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DishTypes" EntityType="Self.DishTypes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Ingridient" EntityType="Self.Ingridient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entrance" EntityType="Self.Entrance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EntranceComposition" EntityType="Self.EntranceComposition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuComposition" EntityType="Self.MenuComposition" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuRequirement" EntityType="Self.MenuRequirement" Schema="dbo" store:Type="Tables" />
@@ -163,16 +207,24 @@
             <End Role="Dish" EntitySet="Dish" />
             <End Role="DishComposition" EntitySet="DishComposition" />
           </AssociationSet>
-          <AssociationSet Name="FK_DishComposition_Ingridient" Association="Self.FK_DishComposition_Ingridient">
-            <End Role="Ingridient" EntitySet="Ingridient" />
+          <AssociationSet Name="FK_DishComposition_Ingredient" Association="Self.FK_DishComposition_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
             <End Role="DishComposition" EntitySet="DishComposition" />
           </AssociationSet>
-          <AssociationSet Name="FK_Menu_MenuComposition" Association="Self.FK_Menu_MenuComposition">
-            <End Role="MenuComposition" EntitySet="MenuComposition" />
-            <End Role="Menu" EntitySet="Menu" />
+          <AssociationSet Name="FK_EntranceComposition_Entrance" Association="Self.FK_EntranceComposition_Entrance">
+            <End Role="Entrance" EntitySet="Entrance" />
+            <End Role="EntranceComposition" EntitySet="EntranceComposition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntranceComposition_Ingredient" Association="Self.FK_EntranceComposition_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="EntranceComposition" EntitySet="EntranceComposition" />
           </AssociationSet>
           <AssociationSet Name="FK_MenuComposition_DishComposition" Association="Self.FK_MenuComposition_DishComposition">
             <End Role="DishComposition" EntitySet="DishComposition" />
+            <End Role="MenuComposition" EntitySet="MenuComposition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuComposition_Menu" Association="Self.FK_MenuComposition_Menu">
+            <End Role="Menu" EntitySet="Menu" />
             <End Role="MenuComposition" EntitySet="MenuComposition" />
           </AssociationSet>
           <AssociationSet Name="FK_MenuRequirement_DishTypes" Association="Self.FK_MenuRequirement_DishTypes">
@@ -194,7 +246,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Cost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Decimal" />
           <Property Name="Type" Type="Int32" />
           <Property Name="Frequency" Type="Int32" />
           <NavigationProperty Name="DishTypes" Relationship="Self.FK_Dish_DishTypes" FromRole="Dish" ToRole="DishTypes" />
@@ -208,8 +260,9 @@
           <Property Name="Dish" Type="Int32" />
           <Property Name="Ingridient" Type="Int32" />
           <NavigationProperty Name="Dish1" Relationship="Self.FK_DishComposition_Dish" FromRole="DishComposition" ToRole="Dish" />
-          <NavigationProperty Name="Ingridient1" Relationship="Self.FK_DishComposition_Ingridient" FromRole="DishComposition" ToRole="Ingridient" />
           <NavigationProperty Name="MenuComposition" Relationship="MenuUnitDefaultModel.FK_MenuComposition_DishComposition" FromRole="DishComposition" ToRole="MenuComposition" />
+          <Property Name="Count" Type="Double" />
+          <NavigationProperty Name="Ingredient" Relationship="MenuUnitDefaultModel.FK_DishComposition_Ingredient" FromRole="DishComposition" ToRole="Ingredient" />
         </EntityType>
         <EntityType Name="DishTypes">
           <Key>
@@ -220,24 +273,14 @@
           <NavigationProperty Name="Dish" Relationship="Self.FK_Dish_DishTypes" FromRole="DishTypes" ToRole="Dish" />
           <NavigationProperty Name="MenuRequirement" Relationship="MenuUnitDefaultModel.FK_MenuRequirement_DishTypes" FromRole="DishTypes" ToRole="MenuRequirement" />
         </EntityType>
-        <EntityType Name="Ingridient">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Cost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DishComposition" Relationship="Self.FK_DishComposition_Ingridient" FromRole="Ingridient" ToRole="DishComposition" />
-        </EntityType>
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Precision="0" />
-          <Property Name="CompositionId" Type="Int32" />
-          <NavigationProperty Name="MenuComposition" Relationship="MenuUnitDefaultModel.FK_Menu_MenuComposition" FromRole="Menu" ToRole="MenuComposition" />
-          <NavigationProperty Name="MenuRequirement" Relationship="MenuUnitDefaultModel.FK_MenuRequirement_Menu" FromRole="Menu" ToRole="MenuRequirement" />
+          <NavigationProperty Name="MenuRequirement1" Relationship="MenuUnitDefaultModel.FK_MenuRequirement_Menu" FromRole="Menu" ToRole="MenuRequirement" />
+          <NavigationProperty Name="MenuComposition1" Relationship="MenuUnitDefaultModel.FK_MenuComposition_Menu" FromRole="Menu" ToRole="MenuComposition" />
         </EntityType>
         <Association Name="FK_Dish_DishTypes">
           <End Role="DishTypes" Type="Self.DishTypes" Multiplicity="0..1" />
@@ -263,23 +306,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DishComposition_Ingridient">
-          <End Role="Ingridient" Type="Self.Ingridient" Multiplicity="0..1" />
-          <End Role="DishComposition" Type="Self.DishComposition" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ingridient">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DishComposition">
-              <PropertyRef Name="Ingridient" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="MenuUnitEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Dish" EntityType="Self.Dish" />
           <EntitySet Name="DishComposition" EntityType="Self.DishComposition" />
           <EntitySet Name="DishTypes" EntityType="Self.DishTypes" />
-          <EntitySet Name="Ingridient" EntityType="Self.Ingridient" />
           <EntitySet Name="Menu" EntityType="Self.Menu" />
           <AssociationSet Name="FK_Dish_DishTypes" Association="Self.FK_Dish_DishTypes">
             <End Role="DishTypes" EntitySet="DishTypes" />
@@ -289,27 +319,38 @@
             <End Role="Dish" EntitySet="Dish" />
             <End Role="DishComposition" EntitySet="DishComposition" />
           </AssociationSet>
-          <AssociationSet Name="FK_DishComposition_Ingridient" Association="Self.FK_DishComposition_Ingridient">
-            <End Role="Ingridient" EntitySet="Ingridient" />
-            <End Role="DishComposition" EntitySet="DishComposition" />
-          </AssociationSet>
           <EntitySet Name="MenuComposition" EntityType="MenuUnitDefaultModel.MenuComposition" />
           <AssociationSet Name="FK_MenuComposition_DishComposition" Association="MenuUnitDefaultModel.FK_MenuComposition_DishComposition">
             <End Role="DishComposition" EntitySet="DishComposition" />
             <End Role="MenuComposition" EntitySet="MenuComposition" />
           </AssociationSet>
-          <AssociationSet Name="FK_Menu_MenuComposition" Association="MenuUnitDefaultModel.FK_Menu_MenuComposition">
-            <End Role="MenuComposition" EntitySet="MenuComposition" />
-            <End Role="Menu" EntitySet="Menu" />
-          </AssociationSet>
           <EntitySet Name="MenuRequirement" EntityType="MenuUnitDefaultModel.MenuRequirement" />
           <AssociationSet Name="FK_MenuRequirement_DishTypes" Association="MenuUnitDefaultModel.FK_MenuRequirement_DishTypes">
-            <End Role="DishTypes" EntitySet="DishTypes" />
-            <End Role="MenuRequirement" EntitySet="MenuRequirement" />
+            <End EntitySet="DishTypes" Role="DishTypes" />
+            <End EntitySet="MenuRequirement" Role="MenuRequirement" />
           </AssociationSet>
           <AssociationSet Name="FK_MenuRequirement_Menu" Association="MenuUnitDefaultModel.FK_MenuRequirement_Menu">
+            <End EntitySet="Menu" Role="Menu" />
+            <End EntitySet="MenuRequirement" Role="MenuRequirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuComposition_Menu" Association="MenuUnitDefaultModel.FK_MenuComposition_Menu">
             <End Role="Menu" EntitySet="Menu" />
-            <End Role="MenuRequirement" EntitySet="MenuRequirement" />
+            <End Role="MenuComposition" EntitySet="MenuComposition" />
+          </AssociationSet>
+          <EntitySet Name="Entrance" EntityType="MenuUnitDefaultModel.Entrance" />
+          <EntitySet Name="EntranceComposition" EntityType="MenuUnitDefaultModel.EntranceComposition" />
+          <EntitySet Name="Ingredient" EntityType="MenuUnitDefaultModel.Ingredient" />
+          <AssociationSet Name="FK_DishComposition_Ingredient" Association="MenuUnitDefaultModel.FK_DishComposition_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="DishComposition" EntitySet="DishComposition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntranceComposition_Entrance" Association="MenuUnitDefaultModel.FK_EntranceComposition_Entrance">
+            <End Role="Entrance" EntitySet="Entrance" />
+            <End Role="EntranceComposition" EntitySet="EntranceComposition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntranceComposition_Ingredient" Association="MenuUnitDefaultModel.FK_EntranceComposition_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="EntranceComposition" EntitySet="EntranceComposition" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="MenuComposition">
@@ -320,7 +361,7 @@
           <Property Name="Menu" Type="Int32" />
           <Property Name="DishComposition" Type="Int32" />
           <NavigationProperty Name="DishComposition1" Relationship="MenuUnitDefaultModel.FK_MenuComposition_DishComposition" FromRole="MenuComposition" ToRole="DishComposition" />
-          <NavigationProperty Name="Menu1" Relationship="MenuUnitDefaultModel.FK_Menu_MenuComposition" FromRole="MenuComposition" ToRole="Menu" />
+          <NavigationProperty Name="Menu2" Relationship="MenuUnitDefaultModel.FK_MenuComposition_Menu" FromRole="MenuComposition" ToRole="Menu" />
         </EntityType>
         <Association Name="FK_MenuComposition_DishComposition">
           <End Type="MenuUnitDefaultModel.DishComposition" Role="DishComposition" Multiplicity="0..1" />
@@ -334,32 +375,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Menu_MenuComposition">
-          <End Type="MenuUnitDefaultModel.MenuComposition" Role="MenuComposition" Multiplicity="0..1" />
-          <End Type="MenuUnitDefaultModel.Menu" Role="Menu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MenuComposition">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Menu">
-              <PropertyRef Name="CompositionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="MenuRequirement">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Menu" Type="Int32" />
           <Property Name="DishType" Type="Int32" />
           <Property Name="Count" Type="Int32" />
           <NavigationProperty Name="DishTypes" Relationship="MenuUnitDefaultModel.FK_MenuRequirement_DishTypes" FromRole="MenuRequirement" ToRole="DishTypes" />
           <NavigationProperty Name="Menu1" Relationship="MenuUnitDefaultModel.FK_MenuRequirement_Menu" FromRole="MenuRequirement" ToRole="Menu" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <Association Name="FK_MenuRequirement_DishTypes">
-          <End Type="MenuUnitDefaultModel.DishTypes" Role="DishTypes" Multiplicity="0..1" />
-          <End Type="MenuUnitDefaultModel.MenuRequirement" Role="MenuRequirement" Multiplicity="*" />
+          <End Type="MenuUnitDefaultModel.DishTypes" Multiplicity="0..1" Role="DishTypes" />
+          <End Type="MenuUnitDefaultModel.MenuRequirement" Multiplicity="*" Role="MenuRequirement" />
           <ReferentialConstraint>
             <Principal Role="DishTypes">
               <PropertyRef Name="Id" />
@@ -370,14 +399,93 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MenuRequirement_Menu">
-          <End Type="MenuUnitDefaultModel.Menu" Role="Menu" Multiplicity="0..1" />
-          <End Type="MenuUnitDefaultModel.MenuRequirement" Role="MenuRequirement" Multiplicity="*" />
+          <End Type="MenuUnitDefaultModel.Menu" Multiplicity="0..1" Role="Menu" />
+          <End Type="MenuUnitDefaultModel.MenuRequirement" Multiplicity="*" Role="MenuRequirement" />
           <ReferentialConstraint>
             <Principal Role="Menu">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="MenuRequirement">
               <PropertyRef Name="Menu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuComposition_Menu">
+          <End Type="MenuUnitDefaultModel.Menu" Role="Menu" Multiplicity="0..1" />
+          <End Type="MenuUnitDefaultModel.MenuComposition" Role="MenuComposition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuComposition">
+              <PropertyRef Name="Menu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Entrance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EntranceComposition" Relationship="MenuUnitDefaultModel.FK_EntranceComposition_Entrance" FromRole="Entrance" ToRole="EntranceComposition" />
+        </EntityType>
+        <EntityType Name="EntranceComposition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Entrance" Type="Int32" />
+          <Property Name="Ingredient" Type="Int32" />
+          <Property Name="Count" Type="Double" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Entrance1" Relationship="MenuUnitDefaultModel.FK_EntranceComposition_Entrance" FromRole="EntranceComposition" ToRole="Entrance" />
+          <NavigationProperty Name="Ingredient1" Relationship="MenuUnitDefaultModel.FK_EntranceComposition_Ingredient" FromRole="EntranceComposition" ToRole="Ingredient" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Count" Type="Double" />
+          <NavigationProperty Name="DishComposition" Relationship="MenuUnitDefaultModel.FK_DishComposition_Ingredient" FromRole="Ingredient" ToRole="DishComposition" />
+          <NavigationProperty Name="EntranceComposition" Relationship="MenuUnitDefaultModel.FK_EntranceComposition_Ingredient" FromRole="Ingredient" ToRole="EntranceComposition" />
+        </EntityType>
+        <Association Name="FK_DishComposition_Ingredient">
+          <End Type="MenuUnitDefaultModel.Ingredient" Role="Ingredient" Multiplicity="0..1" />
+          <End Type="MenuUnitDefaultModel.DishComposition" Role="DishComposition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DishComposition">
+              <PropertyRef Name="Ingridient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntranceComposition_Entrance">
+          <End Type="MenuUnitDefaultModel.Entrance" Role="Entrance" Multiplicity="0..1" />
+          <End Type="MenuUnitDefaultModel.EntranceComposition" Role="EntranceComposition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entrance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EntranceComposition">
+              <PropertyRef Name="Entrance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntranceComposition_Ingredient">
+          <End Type="MenuUnitDefaultModel.Ingredient" Role="Ingredient" Multiplicity="0..1" />
+          <End Type="MenuUnitDefaultModel.EntranceComposition" Role="EntranceComposition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EntranceComposition">
+              <PropertyRef Name="Ingredient" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -401,6 +509,7 @@
           <EntitySetMapping Name="DishComposition">
             <EntityTypeMapping TypeName="MenuUnitDefaultModel.DishComposition">
               <MappingFragment StoreEntitySet="DishComposition">
+                <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Dish" ColumnName="Dish" />
                 <ScalarProperty Name="Ingridient" ColumnName="Ingridient" />
@@ -415,21 +524,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ingridient">
-            <EntityTypeMapping TypeName="MenuUnitDefaultModel.Ingridient">
-              <MappingFragment StoreEntitySet="Ingridient">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Menu">
             <EntityTypeMapping TypeName="MenuUnitDefaultModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="CompositionId" ColumnName="CompositionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -445,10 +544,39 @@
           <EntitySetMapping Name="MenuRequirement">
             <EntityTypeMapping TypeName="MenuUnitDefaultModel.MenuRequirement">
               <MappingFragment StoreEntitySet="MenuRequirement">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="DishType" ColumnName="DishType" />
                 <ScalarProperty Name="Menu" ColumnName="Menu" />
-                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entrance">
+            <EntityTypeMapping TypeName="MenuUnitDefaultModel.Entrance">
+              <MappingFragment StoreEntitySet="Entrance">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntranceComposition">
+            <EntityTypeMapping TypeName="MenuUnitDefaultModel.EntranceComposition">
+              <MappingFragment StoreEntitySet="EntranceComposition">
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Ingredient" ColumnName="Ingredient" />
+                <ScalarProperty Name="Entrance" ColumnName="Entrance" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredient">
+            <EntityTypeMapping TypeName="MenuUnitDefaultModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

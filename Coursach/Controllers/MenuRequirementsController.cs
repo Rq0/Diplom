@@ -51,7 +51,7 @@ namespace Coursach.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,Menu,DishType,Count")] MenuRequirement menuRequirement)
         {
-            menuRequirement.Menu = menuRequirement.id;
+            menuRequirement.Menu = menuRequirement.Id;
             if (ModelState.IsValid)
             {
                 db.MenuRequirement.Add(menuRequirement);

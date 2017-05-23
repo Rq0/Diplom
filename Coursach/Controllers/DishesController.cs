@@ -18,12 +18,12 @@ namespace Coursach.Controllers
         {
             List<DishComposition> dishCompositions = db.DishComposition.Where(m => m.Dish == dish.Id).ToList();
             dish = db.Dish.Find(dish.Id);
-            dish.Cost = "0";
+            dish.Cost = 0;
             for (int i = 0; i< dishCompositions.Count;i++)
             {
-                var ingridient = db.Ingridient.Find(dishCompositions[i].Ingridient);
+                var ingridient = db.Ingredient.Find(dishCompositions[i].Ingridient);
                 if (ingridient != null)
-                    dish.Cost = (int.Parse(dish.Cost) + int.Parse(ingridient.Cost)).ToString();
+                    dish.Cost = dish.Cost + ingridient.Cost;
             }
             if (ModelState.IsValid)
             {

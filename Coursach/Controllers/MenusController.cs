@@ -17,7 +17,7 @@ namespace Coursach.Controllers
         // GET: Menus
         public ActionResult Index()
         {
-            var menu = db.Menu.Include(m => m.MenuComposition);
+            var menu = db.Menu.Include(m => m.MenuComposition1);
             return View(menu.ToList());
         }
 
@@ -57,7 +57,7 @@ namespace Coursach.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CompositionId = new SelectList(db.MenuComposition, "Id", "Id", menu.CompositionId);
+            ViewBag.CompositionId = new SelectList(db.MenuComposition, "Id", "Id", menu.MenuComposition1);
             return View(menu);
         }
 
@@ -73,7 +73,7 @@ namespace Coursach.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CompositionId = new SelectList(db.MenuComposition, "Id", "Id", menu.CompositionId);
+            ViewBag.CompositionId = new SelectList(db.MenuComposition, "Id", "Id", menu.MenuComposition1);
             return View(menu);
         }
 
@@ -90,7 +90,7 @@ namespace Coursach.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CompositionId = new SelectList(db.MenuComposition, "Id", "Id", menu.CompositionId);
+            ViewBag.CompositionId = new SelectList(db.MenuComposition, "Id", "Id", menu.MenuComposition1);
             return View(menu);
         }
 

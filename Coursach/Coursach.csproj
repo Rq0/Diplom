@@ -315,10 +315,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entrance.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntranceComposition.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Ingridient.cs">
+    <Compile Include="Ingredient.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Menu.cs">
