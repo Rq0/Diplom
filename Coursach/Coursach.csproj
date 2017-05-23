@@ -285,6 +285,8 @@
     <Compile Include="Controllers\DishCompositionsController.cs" />
     <Compile Include="Controllers\DishesController.cs" />
     <Compile Include="Controllers\DishTypesController.cs" />
+    <Compile Include="Controllers\EntranceCompositionsController.cs" />
+    <Compile Include="Controllers\EntrancesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IngridientsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -456,6 +458,16 @@
     <Content Include="Views\MenuRequirements\Index.cshtml" />
     <Content Include="Scripts\TestJsx.jsx" />
     <Content Include="Views\Menus\View.cshtml" />
+    <Content Include="Views\Entrances\Create.cshtml" />
+    <Content Include="Views\Entrances\Delete.cshtml" />
+    <Content Include="Views\Entrances\Details.cshtml" />
+    <Content Include="Views\Entrances\Edit.cshtml" />
+    <Content Include="Views\Entrances\Index.cshtml" />
+    <Content Include="Views\EntranceCompositions\Create.cshtml" />
+    <Content Include="Views\EntranceCompositions\Delete.cshtml" />
+    <Content Include="Views\EntranceCompositions\Details.cshtml" />
+    <Content Include="Views\EntranceCompositions\Edit.cshtml" />
+    <Content Include="Views\EntranceCompositions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
