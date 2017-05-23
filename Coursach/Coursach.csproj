@@ -456,7 +456,6 @@
     <Content Include="Views\MenuRequirements\Edit.cshtml" />
     <Content Include="Views\MenuRequirements\Index.cshtml" />
     <Content Include="Scripts\TestJsx.jsx" />
-    <Content Include="Views\Dishes\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

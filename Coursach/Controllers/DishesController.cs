@@ -57,7 +57,7 @@ namespace Coursach.Controllers
             {
                 return HttpNotFound();
             }
-            return PartialView("View",dish);
+            return View(dish);
         }
 
         // GET: Dishes/Create

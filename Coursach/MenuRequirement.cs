@@ -14,10 +14,10 @@ namespace Coursach
     
     public partial class MenuRequirement
     {
-        public int Id { get; set; }
         public Nullable<int> Menu { get; set; }
         public Nullable<int> DishType { get; set; }
         public Nullable<int> Count { get; set; }
+        public int Id { get; set; }
     
         public virtual DishTypes DishTypes { get; set; }
         public virtual Menu Menu1 { get; set; }
