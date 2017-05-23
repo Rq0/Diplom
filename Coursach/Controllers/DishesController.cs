@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Coursach;
+using Microsoft.Owin.Logging;
 
 namespace Coursach.Controllers
 {
@@ -34,9 +35,12 @@ namespace Coursach.Controllers
             ViewBag.Type = new SelectList(db.DishTypes, "Id", "Name", dish.Type);
             return RedirectToAction("Index");
         }
+
         // GET: Dishes
         public ActionResult Index()
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Index_____________________________________________________");
             var dish = db.Dish.Include(d => d.DishTypes);
             return View(dish.ToList());
         }
@@ -53,7 +57,7 @@ namespace Coursach.Controllers
             {
                 return HttpNotFound();
             }
-            return View(dish);
+            return PartialView("View",dish);
         }
 
         // GET: Dishes/Create
