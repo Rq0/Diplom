@@ -14,11 +14,14 @@ namespace Coursach.Controllers
     public class DishesController : Controller
     {
         private MenuUnitEntities db = new MenuUnitEntities();
-        public ActionResult Calculate([Bind(Include = "Id,Name,Cost,Type,Frequency")] Dish dish)
+        public ActionResult Calculate(int? id)
         {
+            Dish dish = db.Dish.FirstOrDefault(m => m.Id == id);
             List<DishComposition> dishCompositions = db.DishComposition.Where(m => m.Dish == dish.Id).ToList();
-            dish = db.Dish.Find(dish.Id);
+// чет на херню похоже, надо приглядеться
+            //dish = db.Dish.Find(dish.Id);
             dish.Cost = 0;
+// заменить на foreach
             for (int i = 0; i< dishCompositions.Count;i++)
             {
                 var ingridient = db.Ingredient.Find(dishCompositions[i].Ingridient);

@@ -13,28 +13,35 @@ namespace Coursach.Controllers
     public class EntrancesController : Controller
     {
         private MenuUnitEntities db = new MenuUnitEntities();
-        public ActionResult Calculate([Bind(Include = "Id,Entrance, Ingredient, Count, Cost")] Entrance entrance)
+        public ActionResult Calculate(int? id)
         {
-            List<EntranceComposition> entranceCompositions = db.EntranceComposition.Where(m => m.Entrance == entrance.Id).ToList();
-
-            foreach (var e in entranceCompositions)
+            Entrance entrance = db.Entrance.FirstOrDefault(m => m.Id == id);
+            if (!entrance.Recalculation)
             {
-                var ingredient = db.Ingredient.FirstOrDefault(m => m.Id == e.Ingredient1.Id);
-
-                var sumIngredientCost = Convert.ToDouble(ingredient.Cost) * Convert.ToDouble(ingredient.Count);
-                var sumIngredientInEntranceCost = Convert.ToDouble(e.Cost) * Convert.ToDouble(e.Count);
-                var newCount = (ingredient.Count + e.Count);
-
-                ingredient.Cost = Convert.ToDecimal((sumIngredientCost + sumIngredientInEntranceCost) / newCount);
-                ingredient.Count = newCount;
-
-                if (ModelState.IsValid)
+                List<EntranceComposition> entranceCompositions =
+                    db.EntranceComposition.Where(m => m.Entrance == entrance.Id).ToList();
+                entrance.Recalculation = true;
+                foreach (var e in entranceCompositions)
                 {
-                    db.Entry(ingredient).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-            }
+//Ingredient1 увеличивает время работы, можно заменить на Ingredient, наверно
+                    var ingredient = db.Ingredient.FirstOrDefault(m => m.Id == e.Ingredient1.Id);
 
+                    var sumIngredientCost = Convert.ToDouble(ingredient.Cost) * Convert.ToDouble(ingredient.Count);
+                    var sumIngredientInEntranceCost = Convert.ToDouble(e.Cost) * Convert.ToDouble(e.Count);
+                    var newCount = (ingredient.Count + e.Count);
+
+                    ingredient.Cost = Convert.ToDecimal((sumIngredientCost + sumIngredientInEntranceCost) / newCount);
+                    ingredient.Count = newCount;
+
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(ingredient).State = EntityState.Modified;
+                        db.Entry(entrance).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+
+            }
             ViewBag.Entrance = new SelectList(db.Entrance, "Id", "Id");
             ViewBag.Ingredient = new SelectList(db.Ingredient, "Id", "Name");
             return RedirectToAction("Index");
