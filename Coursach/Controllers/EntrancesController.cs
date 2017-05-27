@@ -13,7 +13,32 @@ namespace Coursach.Controllers
     public class EntrancesController : Controller
     {
         private MenuUnitEntities db = new MenuUnitEntities();
+        public ActionResult Calculate([Bind(Include = "Id,Entrance, Ingredient, Count, Cost")] Entrance entrance)
+        {
+            List<EntranceComposition> entranceCompositions = db.EntranceComposition.Where(m => m.Entrance == entrance.Id).ToList();
 
+            foreach (var e in entranceCompositions)
+            {
+                var ingredient = db.Ingredient.FirstOrDefault(m => m.Id == e.Ingredient1.Id);
+
+                var sumIngredientCost = Convert.ToDouble(ingredient.Cost) * Convert.ToDouble(ingredient.Count);
+                var sumIngredientInEntranceCost = Convert.ToDouble(e.Cost) * Convert.ToDouble(e.Count);
+                var newCount = (ingredient.Count + e.Count);
+
+                ingredient.Cost = Convert.ToDecimal((sumIngredientCost + sumIngredientInEntranceCost) / newCount);
+                ingredient.Count = newCount;
+
+                if (ModelState.IsValid)
+                {
+                    db.Entry(ingredient).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+
+            ViewBag.Entrance = new SelectList(db.Entrance, "Id", "Id");
+            ViewBag.Ingredient = new SelectList(db.Ingredient, "Id", "Name");
+            return RedirectToAction("Index");
+        }
         // GET: Entrances
         public ActionResult Index()
         {

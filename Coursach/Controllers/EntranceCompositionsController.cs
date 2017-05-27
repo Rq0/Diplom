@@ -12,6 +12,7 @@ namespace Coursach.Controllers
 {
     public class EntranceCompositionsController : Controller
     {
+      
         private MenuUnitEntities db = new MenuUnitEntities();
 
         // GET: EntranceCompositions
