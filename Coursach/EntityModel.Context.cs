@@ -34,5 +34,10 @@ namespace Coursach
         public virtual DbSet<Entrance> Entrance { get; set; }
         public virtual DbSet<EntranceComposition> EntranceComposition { get; set; }
         public virtual DbSet<Ingredient> Ingredient { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
     }
 }

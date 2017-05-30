@@ -58,21 +58,6 @@ namespace Coursach.Controllers
             return View(db.Entrance.ToList());
         }
 
-        // GET: Entrances/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Entrance entrance = db.Entrance.Find(id);
-            if (entrance == null)
-            {
-                return HttpNotFound();
-            }
-            return View(entrance);
-        }
-
         // GET: Entrances/Create
         public ActionResult Create()
         {

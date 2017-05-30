@@ -22,21 +22,6 @@ namespace Coursach.Controllers
             return View(db.DishTypes.ToList());
         }
 
-        // GET: DishTypes/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DishTypes dishTypes = db.DishTypes.Find(id);
-            if (dishTypes == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dishTypes);
-        }
-
         // GET: DishTypes/Create
         public ActionResult Create()
         {

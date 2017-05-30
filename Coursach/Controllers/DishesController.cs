@@ -29,7 +29,7 @@ namespace Coursach.Controllers
             {
                 var ingridient = db.Ingredient.Find(dishCompositions[i].Ingridient);
                 if (ingridient != null)
-                    dish.Cost = dish.Cost + ingridient.Cost;
+                    dish.Cost = dish.Cost + ingridient.Cost * Convert.ToDecimal(ingridient.Count);
             }
             if (ModelState.IsValid)
             {
@@ -49,21 +49,6 @@ namespace Coursach.Controllers
             logger.Info("Отображение списка блюд");
             var dish = db.Dish.Include(d => d.DishTypes);
             return View(dish.ToList());
-        }
-
-        // GET: Dishes/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Dish dish = db.Dish.Find(id);
-            if (dish == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dish);
         }
 
         // GET: Dishes/Create

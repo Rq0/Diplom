@@ -10,103 +10,92 @@ using Coursach;
 
 namespace Coursach.Controllers
 {
-    public class DishCompositionsController : Controller
+    public class AspNetRolesController : Controller
     {
         private MenuUnitEntities db = new MenuUnitEntities();
 
-        // GET: DishCompositions
+        // GET: AspNetRoles
         public ActionResult Index()
         {
-            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-            logger.Info("Отображение списка состава блюд");
-            var dishComposition = db.DishComposition.Include(d => d.Dish1).Include(d => d.Ingredient);
-            return View(dishComposition.ToList());
+            return View(db.AspNetRoles.ToList());
         }
 
-        // GET: DishCompositions/Create
+        // GET: AspNetRoles/Create
         public ActionResult Create()
         {
-            ViewBag.Dish = new SelectList(db.Dish, "Id", "Name");
-            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name");
             return View();
         }
 
-        // POST: DishCompositions/Create
+        // POST: AspNetRoles/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Dish,Ingridient")] DishComposition dishComposition)
+        public ActionResult Create([Bind(Include = "Id,Name")] AspNetRoles aspNetRoles)
         {
             if (ModelState.IsValid)
             {
-                db.DishComposition.Add(dishComposition);
+                db.AspNetRoles.Add(aspNetRoles);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Dish = new SelectList(db.Dish, "Id", "Name", dishComposition.Dish);
-            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name", dishComposition.Ingridient);
-            return View(dishComposition);
+            return View(aspNetRoles);
         }
 
-        // GET: DishCompositions/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: AspNetRoles/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DishComposition dishComposition = db.DishComposition.Find(id);
-            if (dishComposition == null)
+            AspNetRoles aspNetRoles = db.AspNetRoles.Find(id);
+            if (aspNetRoles == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Dish = new SelectList(db.Dish, "Id", "Name", dishComposition.Dish);
-            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name", dishComposition.Ingridient);
-            return View(dishComposition);
+            return View(aspNetRoles);
         }
 
-        // POST: DishCompositions/Edit/5
+        // POST: AspNetRoles/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Dish,Ingridient")] DishComposition dishComposition)
+        public ActionResult Edit([Bind(Include = "Id,Name")] AspNetRoles aspNetRoles)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(dishComposition).State = EntityState.Modified;
+                db.Entry(aspNetRoles).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Dish = new SelectList(db.Dish, "Id", "Name", dishComposition.Dish);
-            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name", dishComposition.Ingridient);
-            return View(dishComposition);
+            return View(aspNetRoles);
         }
 
-        // GET: DishCompositions/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: AspNetRoles/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DishComposition dishComposition = db.DishComposition.Find(id);
-            if (dishComposition == null)
+            AspNetRoles aspNetRoles = db.AspNetRoles.Find(id);
+            if (aspNetRoles == null)
             {
                 return HttpNotFound();
             }
-            return View(dishComposition);
+            return View(aspNetRoles);
         }
 
-        // POST: DishCompositions/Delete/5
+        // POST: AspNetRoles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            DishComposition dishComposition = db.DishComposition.Find(id);
-            db.DishComposition.Remove(dishComposition);
+            AspNetRoles aspNetRoles = db.AspNetRoles.Find(id);
+            db.AspNetRoles.Remove(aspNetRoles);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

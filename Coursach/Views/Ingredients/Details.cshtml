@@ -4,14 +4,14 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Подробности</h2>
+<h2>Details</h2>
 
 <div>
-    <h4>Ингредиенты</h4>
+    <h4>Ingredient</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Название
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
 
         <dd>
@@ -19,7 +19,7 @@
         </dd>
 
         <dt>
-            Цена
+            @Html.DisplayNameFor(model => model.Cost)
         </dt>
 
         <dd>
@@ -29,6 +29,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Изменить", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>

@@ -109,8 +109,24 @@
       <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MsieJavaScriptEngine, Version=2.1.2.0, Culture=neutral, PublicKeyToken=a3a2846a37ac0d3e, processorArchitecture=MSIL">
       <HintPath>..\packages\MsieJavaScriptEngine.2.1.2\lib\net45\MsieJavaScriptEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider, Version=4.6.22.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.6.22\lib\net45\MvcSiteMapProvider.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider.WebActivator, Version=4.6.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.4.6.22\lib\net45\MvcSiteMapProvider.WebActivator.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -245,12 +261,6 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin">
-      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Owin.Security">
       <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
@@ -281,7 +291,24 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AspNetRoles.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUserClaims.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUserLogins.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUserRoles.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUsers.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AspNetRolesController.cs" />
+    <Compile Include="Controllers\AspNetUserRolesController.cs" />
     <Compile Include="Controllers\DishCompositionsController.cs" />
     <Compile Include="Controllers\DishesController.cs" />
     <Compile Include="Controllers\DishTypesController.cs" />
@@ -374,6 +401,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Coursach.bacpac" />
+    <Content Include="Mvc.sitemap" />
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -422,52 +453,59 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Dishes\Create.cshtml" />
     <Content Include="Views\Dishes\Delete.cshtml" />
-    <Content Include="Views\Dishes\Details.cshtml" />
     <Content Include="Views\Dishes\Edit.cshtml" />
     <Content Include="Views\Dishes\Index.cshtml" />
     <Content Include="Views\DishCompositions\Create.cshtml" />
     <Content Include="Views\DishCompositions\Delete.cshtml" />
-    <Content Include="Views\DishCompositions\Details.cshtml" />
     <Content Include="Views\DishCompositions\Edit.cshtml" />
     <Content Include="Views\DishCompositions\Index.cshtml" />
     <Content Include="Views\DishTypes\Create.cshtml" />
     <Content Include="Views\DishTypes\Delete.cshtml" />
-    <Content Include="Views\DishTypes\Details.cshtml" />
     <Content Include="Views\DishTypes\Edit.cshtml" />
     <Content Include="Views\DishTypes\Index.cshtml" />
     <Content Include="Views\Ingridients\Create.cshtml" />
     <Content Include="Views\Ingridients\Delete.cshtml" />
-    <Content Include="Views\Ingridients\Details.cshtml" />
     <Content Include="Views\Ingridients\Edit.cshtml" />
     <Content Include="Views\Ingridients\Index.cshtml" />
     <Content Include="Views\MenuCompositions\Create.cshtml" />
     <Content Include="Views\MenuCompositions\Delete.cshtml" />
-    <Content Include="Views\MenuCompositions\Details.cshtml" />
     <Content Include="Views\MenuCompositions\Edit.cshtml" />
     <Content Include="Views\MenuCompositions\Index.cshtml" />
     <Content Include="Views\Menus\Create.cshtml" />
     <Content Include="Views\Menus\Delete.cshtml" />
-    <Content Include="Views\Menus\Details.cshtml" />
     <Content Include="Views\Menus\Edit.cshtml" />
     <Content Include="Views\Menus\Index.cshtml" />
     <Content Include="Views\MenuCompositions\ShowWhere.cshtml" />
     <Content Include="Views\MenuRequirements\Create.cshtml" />
     <Content Include="Views\MenuRequirements\Delete.cshtml" />
-    <Content Include="Views\MenuRequirements\Details.cshtml" />
     <Content Include="Views\MenuRequirements\Edit.cshtml" />
     <Content Include="Views\MenuRequirements\Index.cshtml" />
     <Content Include="Scripts\TestJsx.jsx" />
     <Content Include="Views\Menus\View.cshtml" />
     <Content Include="Views\Entrances\Create.cshtml" />
     <Content Include="Views\Entrances\Delete.cshtml" />
-    <Content Include="Views\Entrances\Details.cshtml" />
     <Content Include="Views\Entrances\Edit.cshtml" />
     <Content Include="Views\Entrances\Index.cshtml" />
     <Content Include="Views\EntranceCompositions\Create.cshtml" />
     <Content Include="Views\EntranceCompositions\Delete.cshtml" />
-    <Content Include="Views\EntranceCompositions\Details.cshtml" />
     <Content Include="Views\EntranceCompositions\Edit.cshtml" />
     <Content Include="Views\EntranceCompositions\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
+    <Content Include="Views\AspNetRoles\Create.cshtml" />
+    <Content Include="Views\AspNetRoles\Delete.cshtml" />
+    <Content Include="Views\AspNetRoles\Edit.cshtml" />
+    <Content Include="Views\AspNetRoles\Index.cshtml" />
+    <Content Include="Views\AspNetUserRoles\Create.cshtml" />
+    <Content Include="Views\AspNetUserRoles\Delete.cshtml" />
+    <Content Include="Views\AspNetUserRoles\Edit.cshtml" />
+    <Content Include="Views\AspNetUserRoles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

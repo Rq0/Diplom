@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿+@using MvcSiteMapProvider.Web.Html;
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -21,6 +22,7 @@
             @Html.ActionLink("Главная", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
         </div>
         <div class="navbar-collapse collapse">
+            @*
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Меню", "Index", "Menus")</li>
                 <li>@Html.ActionLink("Состав меню", "Index", "MenuCompositions")</li>
@@ -30,7 +32,8 @@
                 <li>@Html.ActionLink("Состав блюд", "Index", "DishCompositions")</li>
                 <li>@Html.ActionLink("Поставки", "Index", "Entrances")</li>
                 <li>@Html.ActionLink("Состав поставок", "Index", "EntranceCompositions")</li>
-            </ul>
+            </ul>*@
+            @Html.MvcSiteMap().Menu("Mvc")
             @Html.Partial("_LoginPartial")
         </div>
     </div>

@@ -20,21 +20,6 @@ namespace Coursach.Controllers
             return View(db.Ingredient.ToList());
         }
 
-        // GET: Ingridients/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Ingredient ingridient = db.Ingredient.Find(id);
-            if (ingridient == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ingridient);
-        }
-
         // GET: Ingridients/Create
         public ActionResult Create()
         {

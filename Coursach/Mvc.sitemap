@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title=" " controller="Home" action="Index">
+    <mvcSiteMapNode title="Меню" controller="Menus" action="Index" roles="Kitchen"/>
+    <mvcSiteMapNode title="Состав меню" controller="MenuCompositions" action="Index" roles="Kitchen"/>
+    <mvcSiteMapNode title="Типы блюд" controller="DishTypes" action="Index" roles="Manager"/>
+    <mvcSiteMapNode title="Ингредиенты" controller="Ingridients" action="Index" roles="Manager"/>
+    <mvcSiteMapNode title="Блюда" controller="Dishes" action="Index" roles="Manager"/>
+    <mvcSiteMapNode title="Состав блюд" controller="DishCompositions" action="Index" roles="Manager"/>
+    <mvcSiteMapNode title="Поставки" controller="Entrances" action="Index" roles="Warehouse"/>
+    <mvcSiteMapNode title="Состав поставок" controller="EntranceCompositions" action="Index" roles="Warehouse"/>
+    <mvcSiteMapNode title="Пользователи" controller="AspNetUserRoles" action="Index" roles="Admin"/>
+    <mvcSiteMapNode title="Роли" controller="AspNetRoles" action="Index" roles="Admin"/>
+  </mvcSiteMapNode>
+
+</mvcSiteMap>

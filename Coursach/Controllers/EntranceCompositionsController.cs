@@ -22,21 +22,6 @@ namespace Coursach.Controllers
             return View(entranceComposition.ToList());
         }
 
-        // GET: EntranceCompositions/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EntranceComposition entranceComposition = db.EntranceComposition.Find(id);
-            if (entranceComposition == null)
-            {
-                return HttpNotFound();
-            }
-            return View(entranceComposition);
-        }
-
         // GET: EntranceCompositions/Create
         public ActionResult Create()
         {

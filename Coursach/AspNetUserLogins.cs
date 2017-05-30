@@ -12,13 +12,12 @@ namespace Coursach
     using System;
     using System.Collections.Generic;
     
-    public partial class MenuComposition
+    public partial class AspNetUserLogins
     {
-        public int Id { get; set; }
-        public Nullable<int> Menu { get; set; }
-        public Nullable<int> DishComposition { get; set; }
+        public string LoginProvider { get; set; }
+        public string ProviderKey { get; set; }
+        public string UserId { get; set; }
     
-        public virtual DishComposition DishComposition1 { get; set; }
-        public virtual Menu Menu2 { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

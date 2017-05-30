@@ -4,24 +4,24 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Состав поставки</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Count)
+            Количество
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Cost)
+            Цена
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Entrance1.Id)
+            Поставка
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Ingredient1.Name)
+            Ингредиент
         </th>
         <th></th>
     </tr>
@@ -41,9 +41,8 @@
             @Html.DisplayFor(modelItem => item.Ingredient1.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+            @Html.ActionLink("Изменить", "Edit", new {id = item.Id}) |
+            @Html.ActionLink("Удалить", "Delete", new {id = item.Id})
         </td>
     </tr>
 }

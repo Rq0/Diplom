@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Coursach.Ingredient>
+﻿@model IEnumerable<Coursach.AspNetRoles>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Ингредиенты</h2>
+<h2>Роли</h2>
 
 <p>
     @Html.ActionLink("Добавить", "Create")
@@ -12,10 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            Название
-        </th>
-        <th>
-            Цена
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th></th>
     </tr>
@@ -24,9 +21,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cost)
         </td>
         <td>
             @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |

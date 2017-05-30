@@ -10,103 +10,101 @@ using Coursach;
 
 namespace Coursach.Controllers
 {
-    public class DishCompositionsController : Controller
+    public class AspNetUserRolesController : Controller
     {
         private MenuUnitEntities db = new MenuUnitEntities();
 
-        // GET: DishCompositions
+        // GET: AspNetUserRoles
         public ActionResult Index()
         {
-            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-            logger.Info("Отображение списка состава блюд");
-            var dishComposition = db.DishComposition.Include(d => d.Dish1).Include(d => d.Ingredient);
-            return View(dishComposition.ToList());
+            var aspNetUserRoles = db.AspNetUserRoles.Include(a => a.AspNetRoles).Include(a => a.AspNetUsers);
+            return View(aspNetUserRoles.ToList());
         }
 
-        // GET: DishCompositions/Create
+        // GET: AspNetUserRoles/Create
         public ActionResult Create()
         {
-            ViewBag.Dish = new SelectList(db.Dish, "Id", "Name");
-            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name");
+            ViewBag.RoleId = new SelectList(db.AspNetRoles, "Id", "Name");
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email");
             return View();
         }
 
-        // POST: DishCompositions/Create
+        // POST: AspNetUserRoles/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Dish,Ingridient")] DishComposition dishComposition)
+        public ActionResult Create([Bind(Include = "UserId,RoleId,UserRoleId")] AspNetUserRoles aspNetUserRoles)
         {
             if (ModelState.IsValid)
             {
-                db.DishComposition.Add(dishComposition);
+                db.AspNetUserRoles.Add(aspNetUserRoles);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Dish = new SelectList(db.Dish, "Id", "Name", dishComposition.Dish);
-            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name", dishComposition.Ingridient);
-            return View(dishComposition);
+            ViewBag.RoleId = new SelectList(db.AspNetRoles, "Id", "Name", aspNetUserRoles.RoleId);
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", aspNetUserRoles.UserId);
+            return View(aspNetUserRoles);
         }
 
-        // GET: DishCompositions/Edit/5
+        // GET: AspNetUserRoles/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DishComposition dishComposition = db.DishComposition.Find(id);
-            if (dishComposition == null)
+            AspNetUserRoles aspNetUserRoles = db.AspNetUserRoles.Find(id);
+            if (aspNetUserRoles == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Dish = new SelectList(db.Dish, "Id", "Name", dishComposition.Dish);
-            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name", dishComposition.Ingridient);
-            return View(dishComposition);
+            ViewBag.RoleId = new SelectList(db.AspNetRoles, "Id", "Name", aspNetUserRoles.RoleId);
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", aspNetUserRoles.UserId);
+            return View(aspNetUserRoles);
         }
 
-        // POST: DishCompositions/Edit/5
+        // POST: AspNetUserRoles/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Dish,Ingridient")] DishComposition dishComposition)
+        public ActionResult Edit([Bind(Include = "UserId,RoleId,UserRoleId")] AspNetUserRoles aspNetUserRoles)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(dishComposition).State = EntityState.Modified;
+                db.Entry(aspNetUserRoles).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Dish = new SelectList(db.Dish, "Id", "Name", dishComposition.Dish);
-            ViewBag.Ingridient = new SelectList(db.Ingredient, "Id", "Name", dishComposition.Ingridient);
-            return View(dishComposition);
+            ViewBag.RoleId = new SelectList(db.AspNetRoles, "Id", "Name", aspNetUserRoles.RoleId);
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", aspNetUserRoles.UserId);
+            return View(aspNetUserRoles);
         }
 
-        // GET: DishCompositions/Delete/5
+        // GET: AspNetUserRoles/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DishComposition dishComposition = db.DishComposition.Find(id);
-            if (dishComposition == null)
+            AspNetUserRoles aspNetUserRoles = db.AspNetUserRoles.Find(id);
+            if (aspNetUserRoles == null)
             {
                 return HttpNotFound();
             }
-            return View(dishComposition);
+            return View(aspNetUserRoles);
         }
 
-        // POST: DishCompositions/Delete/5
+        // POST: AspNetUserRoles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            DishComposition dishComposition = db.DishComposition.Find(id);
-            db.DishComposition.Remove(dishComposition);
+            AspNetUserRoles aspNetUserRoles = db.AspNetUserRoles.Find(id);
+            db.AspNetUserRoles.Remove(aspNetUserRoles);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

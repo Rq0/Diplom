@@ -21,21 +21,6 @@ namespace Coursach.Controllers
             return View(menuRequirement.ToList());
         }
 
-        // GET: MenuRequirements/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MenuRequirement menuRequirement = db.MenuRequirement.Find(id);
-            if (menuRequirement == null)
-            {
-                return HttpNotFound();
-            }
-            return View(menuRequirement);
-        }
-
         // GET: MenuRequirements/Create
         public ActionResult Create()
         {

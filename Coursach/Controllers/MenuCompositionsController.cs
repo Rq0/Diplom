@@ -32,7 +32,7 @@ namespace Coursach.Controllers
                 }
                 catch (Exception e)
                 {
-                    logger.Warn("Нет требований на этот тип в этом меню {0}", e);
+                    logger.Warn("Нет требований на тип {0} в меню {1}", dishType.Id, id);
                     endOfFor = 0;
                 }
 
@@ -79,21 +79,6 @@ namespace Coursach.Controllers
 
             var menuComposition = db.MenuComposition.Include(m => m.DishComposition1).Where(m => m.Menu == id);
             return View(menuComposition.ToList());
-        }
-
-        // GET: MenuCompositions/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MenuComposition menuComposition = db.MenuComposition.Find(id);
-            if (menuComposition == null)
-            {
-                return HttpNotFound();
-            }
-            return View(menuComposition);
         }
 
         // GET: MenuCompositions/Create

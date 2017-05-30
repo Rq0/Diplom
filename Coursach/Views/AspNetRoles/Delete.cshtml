@@ -1,0 +1,32 @@
+﻿@model Coursach.AspNetRoles
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+<h3>Удалить?</h3>
+<div>
+    <h4>Роль</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Роль
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Index")
+        </div>
+    }
+</div>
