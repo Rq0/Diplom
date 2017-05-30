@@ -17,6 +17,8 @@ namespace Coursach.Controllers
         // GET: DishCompositions
         public ActionResult Index()
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Отображение списка состава блюд");
             var dishComposition = db.DishComposition.Include(d => d.Dish1).Include(d => d.Ingredient);
             return View(dishComposition.ToList());
         }

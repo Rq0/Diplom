@@ -15,9 +15,12 @@ namespace Coursach.Controllers
         private MenuUnitEntities db = new MenuUnitEntities();
         public ActionResult Calculate(int? id)
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Пересчет стоимости ингредиентов из поставки {0}", id);
             Entrance entrance = db.Entrance.FirstOrDefault(m => m.Id == id);
             if (!entrance.Recalculation)
             {
+                logger.Info("Запуск пересчета");
                 List<EntranceComposition> entranceCompositions =
                     db.EntranceComposition.Where(m => m.Entrance == entrance.Id).ToList();
                 entrance.Recalculation = true;
@@ -42,6 +45,7 @@ namespace Coursach.Controllers
                 }
 
             }
+            else logger.Info("Поставка {0} уже была пересчитана",id);
             ViewBag.Entrance = new SelectList(db.Entrance, "Id", "Id");
             ViewBag.Ingredient = new SelectList(db.Ingredient, "Id", "Name");
             return RedirectToAction("Index");
@@ -49,6 +53,8 @@ namespace Coursach.Controllers
         // GET: Entrances
         public ActionResult Index()
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Отображение списка поставок");
             return View(db.Entrance.ToList());
         }
 

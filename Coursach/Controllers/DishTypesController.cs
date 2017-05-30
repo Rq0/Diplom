@@ -17,6 +17,8 @@ namespace Coursach.Controllers
         // GET: DishTypes
         public ActionResult Index()
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Отображение списка типов блюд");
             return View(db.DishTypes.ToList());
         }
 

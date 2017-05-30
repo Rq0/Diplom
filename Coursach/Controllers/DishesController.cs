@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Coursach;
 using Microsoft.Owin.Logging;
+using NLog;
 
 namespace Coursach.Controllers
 {
@@ -16,6 +17,8 @@ namespace Coursach.Controllers
         private MenuUnitEntities db = new MenuUnitEntities();
         public ActionResult Calculate(int? id)
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Пересчет стоимости блюд");
             Dish dish = db.Dish.FirstOrDefault(m => m.Id == id);
             List<DishComposition> dishCompositions = db.DishComposition.Where(m => m.Dish == dish.Id).ToList();
 // чет на херню похоже, надо приглядеться
@@ -34,7 +37,7 @@ namespace Coursach.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            logger.Warn("ModelState не валидна");
             ViewBag.Type = new SelectList(db.DishTypes, "Id", "Name", dish.Type);
             return RedirectToAction("Index");
         }
@@ -43,7 +46,7 @@ namespace Coursach.Controllers
         public ActionResult Index()
         {
             NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-            logger.Info("Index_____________________________________________________");
+            logger.Info("Отображение списка блюд");
             var dish = db.Dish.Include(d => d.DishTypes);
             return View(dish.ToList());
         }
@@ -77,10 +80,18 @@ namespace Coursach.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Cost,Type,Frequency")] Dish dish)
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Создание нового блюда");
             if (ModelState.IsValid)
             {
                 db.Dish.Add(dish);
                 db.SaveChanges();
+                {
+                    DishComposition dishComposition = new DishComposition();
+                    dishComposition.Dish = db.Dish.FirstOrDefault(m=>(m.Name==dish.Name && m.Type==dish.Type)).Id;
+                    db.DishComposition.Add(dishComposition);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
 
@@ -91,6 +102,8 @@ namespace Coursach.Controllers
         // GET: Dishes/Edit/5
         public ActionResult Edit(int? id)
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Изменение блюда");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -124,6 +137,8 @@ namespace Coursach.Controllers
         // GET: Dishes/Delete/5
         public ActionResult Delete(int? id)
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Удаление блюда");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -141,6 +156,8 @@ namespace Coursach.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Подтверждение удаление блюда");
             Dish dish = db.Dish.Find(id);
             db.Dish.Remove(dish);
             db.SaveChanges();
@@ -149,6 +166,8 @@ namespace Coursach.Controllers
 
         protected override void Dispose(bool disposing)
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("___");
             if (disposing)
             {
                 db.Dispose();

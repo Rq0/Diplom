@@ -4,15 +4,15 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Поставки</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить поставку", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            Дата поставки
         </th>
         <th></th>
     </tr>
@@ -24,9 +24,9 @@
         </td>
         <td>
             @Html.ActionLink("Пересчитать цены", "Calculate", new { id = item.Id }) |
-            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+            @Html.ActionLink("Изменить", "Edit", new {id = item.Id}) |
+            @Html.ActionLink("Подробности", "Details", new {id = item.Id}) |
+            @Html.ActionLink("Удалить", "Delete", new {id = item.Id})
         </td>
     </tr>
 }

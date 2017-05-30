@@ -15,46 +15,52 @@ namespace Coursach.Controllers
 {
     public class MenuCompositionsController : Controller
     {
-        private MenuUnitEntities db = new MenuUnitEntities();
+        private readonly MenuUnitEntities db = new MenuUnitEntities();
 
-        
-        public ActionResult Generate([Bind(Include = "Id,Menu,DishComposition")] MenuComposition menuC)
+
+        public ActionResult Generate(int? id)
         {
-            foreach (DishTypes dishType in db.DishTypes)
+            var thisDishes = db.Dish.OrderBy(m => m.Frequency).ToList();
+            var logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Генерирование меню {0}", id);
+            foreach (var dishType in db.DishTypes)
             {
+                int? endOfFor;
                 try
                 {
-                    for (int i = 0;
-                        i < db.MenuRequirement.First(m => (m.Menu == menuC.Id && m.DishType == dishType.Id)).Count;
-                        i++)
-                    {
-                        Dish dish;
-
-                        MenuComposition menuComposition = new MenuComposition
-                        {
-                            Id = 20,
-                            Menu = menuC.Id,
-                            DishComposition = db.Dish.OrderBy(m => m.Frequency).First(n => n.Type == dishType.Id)
-                                .DishComposition.First().Id
-                        };
-                        if (ModelState.IsValid)
-                        {
-                            db.MenuComposition.Add(menuComposition);
-                            dish = db.Dish.Find(menuComposition.DishComposition1.Dish1.Id);
-                            dish.Frequency++;
-                            db.Entry(dish).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
+                    endOfFor = db.MenuRequirement.First(m => (m.Menu == id && m.DishType == dishType.Id)).Count;
                 }
                 catch (Exception e)
                 {
-                    string err = e.Message;
+                    logger.Warn("Нет требований на этот тип в этом меню {0}", e);
+                    endOfFor = 0;
+                }
+
+                for (var i = 0;
+                    i < endOfFor;
+                    i++)
+                {
+                    MenuComposition menuComposition = new MenuComposition { };
+                    menuComposition.Id = 0;
+                    menuComposition.Menu = id;
+                    Dish dish = thisDishes.Find(m=>m.Type ==dishType.Id);
+
+                    menuComposition.DishComposition = db.DishComposition.First(m=>m.Dish== dish.Id).Id;
+
+                    db.MenuComposition.Add(menuComposition);
+                    
+                    if (dish.Frequency == null)
+                    {
+                        dish.Frequency = 0;
+                    }
+                    dish.Frequency++;
+                    db.Entry(dish).State = EntityState.Modified;
+                    thisDishes.Remove(dish);
                 }
             }
             db.SaveChanges();
 
-            return RedirectToAction("ShowWhere", "MenuCompositions", routeValues: new { id =menuC.Id});
+            return RedirectToAction("ShowWhere", "MenuCompositions", routeValues: new {id = id});
         }
 
         // GET: MenuCompositions
@@ -177,7 +183,7 @@ namespace Coursach.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            { 
+            {
                 db.Dispose();
             }
             base.Dispose(disposing);
