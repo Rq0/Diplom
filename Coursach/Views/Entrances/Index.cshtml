@@ -17,17 +17,24 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.ActionLink("Пересчитать цены", "Calculate", new { id = item.Id }) |
-            @Html.ActionLink("Изменить", "Edit", new {id = item.Id}) |
-            @Html.ActionLink("Удалить", "Delete", new {id = item.Id})
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.ActionLink("Пересчитать цены", "Calculate", new { id = item.Id }) |
+                @Html.ActionLink("Изменить", "Edit", new {id = item.Id}) |
+                @Html.ActionLink("Удалить", "Delete", new {id = item.Id})
+            </td>
+        </tr>
+    }
 
 </table>
+@Html.ActionLink("Экспорт", "Export", "Entrances", htmlAttributes: new { @class = "btn btn-primary" })
+@using (Html.BeginForm("Import", "Entrances", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+        @Html.Raw(ViewBag.Error)
+            <input type="file" name="excelfile" class="btn btn-primary" />
+            <input type="submit" value="Импорт" class="btn btn-primary" />
+}
