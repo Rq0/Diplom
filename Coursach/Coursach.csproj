@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Calabonga.Xml.Exports, Version=4.5.6130.23949, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XmlExport.1.0.0\lib\net452\Calabonga.Xml.Exports.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ClearScript, Version=5.4.8.0, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
       <HintPath>..\packages\JavaScriptEngineSwitcher.V8.2.2.0\lib\net45\ClearScript.dll</HintPath>
       <Private>True</Private>
