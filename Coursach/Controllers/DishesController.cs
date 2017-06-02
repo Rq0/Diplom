@@ -151,8 +151,6 @@ namespace Coursach.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-            logger.Info("___");
             if (disposing)
             {
                 db.Dispose();

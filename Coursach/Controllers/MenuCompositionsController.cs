@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using System.Web.Services.Description;
 using System.Web.UI.WebControls;
 using Coursach;
@@ -25,15 +26,23 @@ namespace Coursach.Controllers
             logger.Info("Генерирование меню {0}", id);
             foreach (var dishType in db.DishTypes)
             {
+                bool haveRequirements = false;
                 int? endOfFor;
                 try
                 {
                     endOfFor = db.MenuRequirement.First(m => (m.Menu == id && m.DishType == dishType.Id)).Count;
+                    haveRequirements = true;
                 }
                 catch (Exception e)
                 {
+                    haveRequirements = false;
                     logger.Warn("Нет требований на тип {0} в меню {1}", dishType.Id, id);
                     endOfFor = 0;
+                }
+                if (endOfFor >= (thisDishes.Count(m => m.Type==dishType.Id)) && haveRequirements)
+                {
+                    logger.Error("Недостаточно блюд типа {0} для генерации меню {1}",dishType.Name, id);
+                    return RedirectToAction("Index", "Menus", routeValues: new { id = id });
                 }
 
                 for (var i = 0;
@@ -55,6 +64,7 @@ namespace Coursach.Controllers
                     }
                     dish.Frequency++;
                     db.Entry(dish).State = EntityState.Modified;
+                    logger.Info("Блюдо {0} добавлено в меню {1}", dish.Name, menuComposition.Menu);
                     thisDishes.Remove(dish);
                 }
             }

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Coursach.Models;
+using NLog;
 
 namespace Coursach.Controllers
 {
@@ -68,6 +69,8 @@ namespace Coursach.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Попытка входа");
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -79,13 +82,16 @@ namespace Coursach.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    logger.Info("Вход за {0}", model.Email);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
+                    logger.Info("Вход заблокирован");
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
+                    logger.Warn("Неудачная попытка входа за {0}", model.Email);
                     ModelState.AddModelError("", "Неудачная попытка входа.");
                     return View(model);
             }
@@ -162,7 +168,8 @@ namespace Coursach.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
-
+                    NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+                    logger.Info("Регистрация");
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -392,6 +399,8 @@ namespace Coursach.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("LogOff");
             return RedirectToAction("Index", "Home");
         }
 

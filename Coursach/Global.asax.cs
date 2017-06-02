@@ -13,7 +13,7 @@ namespace Coursach
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         protected void Application_Start()
         {
-            logger.Info("Application Start____________________________________________________");
+            logger.Info("Application Start");
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

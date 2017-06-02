@@ -35,6 +35,6 @@
 @using (Html.BeginForm("Import", "Entrances", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
         @Html.Raw(ViewBag.Error)
-            <input type="file" name="excelfile" class="btn btn-primary" />
-            <input type="submit" value="Импорт" class="btn btn-primary" />
+            <input type="file" name="excelfile" class="btn btn-primary" style="margin-top: 10px;" />
+    <input type="submit" value="Импорт" class="btn btn-primary" style="margin-top: 10px;" />
 }
