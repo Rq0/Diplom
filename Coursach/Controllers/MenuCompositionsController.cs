@@ -39,7 +39,7 @@ namespace Coursach.Controllers
                     logger.Warn("Нет требований на тип {0} в меню {1}", dishType.Id, id);
                     endOfFor = 0;
                 }
-                if (endOfFor >= (thisDishes.Count(m => m.Type==dishType.Id)) && haveRequirements)
+                if (endOfFor > (thisDishes.Count(m => m.Type==dishType.Id)) && haveRequirements)
                 {
                     logger.Error("Недостаточно блюд типа {0} для генерации меню {1}",dishType.Name, id);
                     return RedirectToAction("Index", "Menus", routeValues: new { id = id });
