@@ -14,3 +14,9 @@
 [Выполнение курсового проекта](https://github.com/Rq0/Coursach/blob/master/ROADMAP1.md)
 
 [Прохождение преддипломной практики](https://github.com/Rq0/Coursach/blob/master/ROADMAP2.md)
+
+Отчеты:
+
+[Курсовой проект](https://github.com/Rq0/Coursach/blob/master/Отчет.docx)
+
+[Преддипломная практика](https://github.com/Rq0/Coursach/blob/master/Preddiplomnaya_praktika_Tarynskiy_Krasilnikov.docx)
