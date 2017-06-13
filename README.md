@@ -20,3 +20,5 @@
 [Курсовой проект](https://github.com/Rq0/Diplom/blob/master/Отчет.docx)
 
 [Преддипломная практика](https://github.com/Rq0/Diplom/blob/master/Preddiplomnaya_praktika_Tarynskiy_Krasilnikov.docx)
+
+[Диплом](https://github.com/Rq0/Diplom/blob/master/Тартынский_Красильников_Диплом.docx)
