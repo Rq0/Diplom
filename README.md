@@ -15,7 +15,7 @@
 
 [Прохождение преддипломной практики](https://github.com/Rq0/Diplom/blob/master/ROADMAP2.md)
 
-[Составление отчета по диплому](https://github.com/Rq0/Diplom/blob/master/Progress.md)
+[Составление отчета по диплому](https://github.com/Rq0/Diplom/blob/master/ROADMAP3.md)
 
 Отчеты:
 
